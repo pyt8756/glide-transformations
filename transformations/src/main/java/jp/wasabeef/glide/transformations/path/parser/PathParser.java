@@ -4,6 +4,9 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.Log;
 
+/**
+ * 引用android-shape-imageview
+ */
 class PathParser {
 
     private static final String TAG = SvgToPath.TAG;

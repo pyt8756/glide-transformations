@@ -31,7 +31,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
 /**
- * 圆形裁剪
+ * 圆形
  */
 public class CropCircleTransformation implements Transformation<Bitmap> {
 

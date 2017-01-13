@@ -7,6 +7,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * 引用android-shape-imageview
+ */
 class CopyInputStream {
     private static final String TAG = SvgToPath.TAG;
 

@@ -35,6 +35,9 @@ import java.util.LinkedList;
 
  */
 
+/**
+ * 引用android-shape-imageview
+ */
 public class SvgToPath {
     static final String TAG = SvgToPath.class.getSimpleName();
     private static final float DPI = 72.0f;

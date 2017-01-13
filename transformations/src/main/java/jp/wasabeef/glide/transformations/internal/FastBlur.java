@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
  * limitations under the License.
  */
 
+
 public class FastBlur {
 
     public static Bitmap blur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {

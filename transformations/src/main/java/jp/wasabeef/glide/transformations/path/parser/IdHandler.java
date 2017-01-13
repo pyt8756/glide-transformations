@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Stack;
 
+/**
+ * 引用android-shape-imageview
+ */
 @SuppressWarnings("StatementWithEmptyBody")
 class IdHandler {
     private static final String TAG = SvgToPath.TAG;

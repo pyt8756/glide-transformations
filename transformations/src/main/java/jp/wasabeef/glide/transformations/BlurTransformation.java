@@ -33,7 +33,7 @@ import jp.wasabeef.glide.transformations.internal.FastBlur;
 import jp.wasabeef.glide.transformations.internal.RSBlur;
 
 /**
- * 模糊转变
+ * 模糊
  */
 public class BlurTransformation implements Transformation<Bitmap> {
 

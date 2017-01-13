@@ -32,6 +32,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
 /**
  * 颜色滤镜
+ *
  */
 public class ColorFilterTransformation implements Transformation<Bitmap> {
 

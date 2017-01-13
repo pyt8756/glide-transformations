@@ -4,6 +4,9 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.RectF;
 
+/**
+ * 引用android-shape-imageview
+ */
 public class PathInfo {
     private final float width;
     private final float height;

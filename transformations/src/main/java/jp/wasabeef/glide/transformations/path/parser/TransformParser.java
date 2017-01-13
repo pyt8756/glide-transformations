@@ -3,6 +3,9 @@ package jp.wasabeef.glide.transformations.path.parser;
 import android.graphics.Matrix;
 import android.util.Log;
 
+/**
+ * 引用android-shape-imageview
+ */
 class TransformParser {
     private static final String TAG = SvgToPath.class.getSimpleName();
 

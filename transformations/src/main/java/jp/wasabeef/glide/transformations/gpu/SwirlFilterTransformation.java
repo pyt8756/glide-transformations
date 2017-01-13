@@ -24,6 +24,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageSwirlFilter;
 
+
 /**
  * Creates a swirl distortion on the image.
  */

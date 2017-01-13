@@ -16,6 +16,7 @@ package jp.wasabeef.glide.transformations.gpu;
  * limitations under the License.
  */
 
+
 import android.content.Context;
 
 import com.bumptech.glide.Glide;

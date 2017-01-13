@@ -2,6 +2,9 @@ package jp.wasabeef.glide.transformations.path.parser;
 
 import org.xmlpull.v1.XmlPullParser;
 
+/**
+ * 引用android-shape-imageview
+ */
 @SuppressWarnings("FinalStaticMethod")
 class ParseUtil {
 

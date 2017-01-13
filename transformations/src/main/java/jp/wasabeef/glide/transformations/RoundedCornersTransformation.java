@@ -31,6 +31,9 @@ import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
+/**
+ * 圆角
+ */
 public class RoundedCornersTransformation implements Transformation<Bitmap> {
 
     private static int DEFAULT_WIDTH = 0;

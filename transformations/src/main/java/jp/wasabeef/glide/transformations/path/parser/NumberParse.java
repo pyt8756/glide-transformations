@@ -4,6 +4,9 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 
+/**
+ * 引用android-shape-imageview
+ */
 @SuppressWarnings("FinalStaticMethod")
 class NumberParse {
     final ArrayList<Float> numbers;

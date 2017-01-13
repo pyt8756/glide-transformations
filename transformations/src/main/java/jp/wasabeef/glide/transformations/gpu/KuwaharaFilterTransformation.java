@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageKuwaharaFilter;
 
+
 /**
  * Kuwahara all the colors in the image.
  *

@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageSepiaFilter;
 
+
 /**
  * Applies a simple sepia effect.
  *

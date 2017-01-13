@@ -32,6 +32,9 @@ import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
 import jp.wasabeef.glide.transformations.internal.Utils;
 
+/**
+ * 图片
+ */
 public class MaskTransformation implements Transformation<Bitmap> {
 
     private Context mContext;

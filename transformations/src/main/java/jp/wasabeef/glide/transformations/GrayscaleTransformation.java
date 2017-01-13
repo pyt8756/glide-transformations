@@ -30,7 +30,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
 /**
- * 黑白图转变
+ * 黑白
  */
 public class GrayscaleTransformation implements Transformation<Bitmap> {
 

@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageToonFilter;
 
+
 /**
  * The threshold at which to apply the edges, default of 0.2.
  * The levels of quantization for the posterization of colors within the scene,

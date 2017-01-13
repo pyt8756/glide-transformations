@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageContrastFilter;
 
+
 /**
  * contrast value ranges from 0.0 to 4.0, with 1.0 as the normal level
  */

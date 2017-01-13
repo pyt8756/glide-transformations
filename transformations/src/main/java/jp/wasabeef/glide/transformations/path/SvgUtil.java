@@ -10,6 +10,9 @@ import jp.wasabeef.glide.transformations.path.parser.IoUtil;
 import jp.wasabeef.glide.transformations.path.parser.PathInfo;
 import jp.wasabeef.glide.transformations.path.parser.SvgToPath;
 
+/**
+ * 引用android-shape-imageview
+ */
 public class SvgUtil {
     private static final Map<Integer, PathInfo> PATH_MAP = new ConcurrentHashMap<>();
 

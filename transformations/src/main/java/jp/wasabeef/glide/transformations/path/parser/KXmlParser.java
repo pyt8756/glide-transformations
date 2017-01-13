@@ -35,7 +35,9 @@ import java.util.Hashtable;
  * A simple, pull based XML parser. This classe replaces the kXML 1
  * XmlParser class and the corresponding event classes.
  */
-
+/**
+ * 引用kxml2
+ */
 class KXmlParser implements XmlPullParser {
 
     private Object location;

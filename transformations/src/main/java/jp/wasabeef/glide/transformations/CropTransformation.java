@@ -28,7 +28,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
 /**
- * 裁剪图片
+ * 裁剪
  */
 public class CropTransformation implements Transformation<Bitmap> {
 

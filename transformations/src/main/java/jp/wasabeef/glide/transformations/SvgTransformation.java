@@ -35,6 +35,9 @@ import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 import jp.wasabeef.glide.transformations.path.SvgUtil;
 import jp.wasabeef.glide.transformations.path.parser.PathInfo;
 
+/**
+ * svg
+ */
 public class SvgTransformation implements Transformation<Bitmap> {
 
     private static int DEFAULT_WIDTH = 0;

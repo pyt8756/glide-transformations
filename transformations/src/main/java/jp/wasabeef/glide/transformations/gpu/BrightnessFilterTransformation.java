@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageBrightnessFilter;
 
+
 /**
  * brightness value ranges from -1.0 to 1.0, with 0.0 as the normal level
  */

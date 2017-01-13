@@ -26,6 +26,7 @@ import java.util.Arrays;
 
 import jp.co.cyberagent.android.gpuimage.GPUImageVignetteFilter;
 
+
 /**
  * Performs a vignetting effect, fading out the image at the edges
  * The directional intensity of the vignetting,

@@ -25,6 +25,9 @@ package jp.wasabeef.glide.transformations.path.parser;
  *
  * @author Apache Software Foundation, Larva Labs LLC
  */
+/**
+ * 引用android-shape-imageview
+ */
 class ParserHelper {
 
     private char current;

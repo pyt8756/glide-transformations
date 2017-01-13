@@ -20,6 +20,7 @@ import android.os.Build;
  * limitations under the License.
  */
 
+
 public final class Utils {
 
     private Utils() {
