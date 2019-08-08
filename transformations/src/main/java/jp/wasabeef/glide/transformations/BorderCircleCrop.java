@@ -1,9 +1,12 @@
 package jp.wasabeef.glide.transformations;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,16 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 public class BorderCircleCrop extends BaseTransformation {
 
     private static final String ID = "BorderCircleCrop.";
+
+    private static final int PAINT_FLAGS = Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG;
+    private static final int CIRCLE_CROP_PAINT_FLAGS = PAINT_FLAGS | Paint.ANTI_ALIAS_FLAG;
+    private static final Paint CIRCLE_CROP_SHAPE_PAINT = new Paint(CIRCLE_CROP_PAINT_FLAGS);
+    private static final Paint CIRCLE_CROP_BITMAP_PAINT;
+
+    static {
+        CIRCLE_CROP_BITMAP_PAINT = new Paint(CIRCLE_CROP_PAINT_FLAGS);
+        CIRCLE_CROP_BITMAP_PAINT.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+    }
 
     /**
      * 总边框宽度
@@ -110,7 +123,7 @@ public class BorderCircleCrop extends BaseTransformation {
     }
 
     @Override
-    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+    protected Bitmap transform(@NonNull Context context, @NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
         int min = Math.min(outWidth, outHeight);
 
         int destMinEdge = (int) (min - mBorderWidth * 2);
@@ -130,12 +143,10 @@ public class BorderCircleCrop extends BaseTransformation {
 
         RectF destRect = new RectF(left, top, left + scaledWidth, top + scaledHeight);
 
-        // Alpha is required for this transformation.
+        // 此转换需要Alpha
         Bitmap bitmap = getAlphaSafeBitmap(pool, toTransform);
 
-        Bitmap.Config outConfig = getAlphaSafeConfig(toTransform);
-        Bitmap result = pool.get(min, min, outConfig);
-
+        Bitmap result = pool.get(min, min, getAlphaSafeConfig(toTransform));
         result.setHasAlpha(true);
 
         Canvas canvas = new Canvas(result);
