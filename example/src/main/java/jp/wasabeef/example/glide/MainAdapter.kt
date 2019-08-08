@@ -40,7 +40,6 @@ class MainAdapter(
         BorderCircleCrop,
         ColorFilter,
         Grayscale,
-        RoundedCorners,
         Blur,
         SupportRSBlur,
         Toon,
@@ -52,8 +51,28 @@ class MainAdapter(
         Swirl,
         Brightness,
         Kuawahara,
-        Vignette
+        Vignette,
+        RoundedAll,
+        RoundedTopLeft,
+        RoundedTopRight,
+        RoundedBottomLeft,
+        RoundedBottomRight,
+        RoundedTop,
+        RoundedBottom,
+        RoundedLeft,
+        RoundedRight,
+        RoundedOtherTopLeft,
+        RoundedOtherTopRight,
+        RoundedOtherBottomLeft,
+        RoundedOtherBottomRight,
+        RoundedDiagonalFromTopLeft,
+        RoundedDiagonalFromTopRight,
     }
+
+    val border1Width = 10
+    val border1Color = Color.BLUE
+    val border2Width = 10
+    val border2Color = Color.RED
 
     override fun getItemCount(): Int {
         return dataSet.size
@@ -72,7 +91,7 @@ class MainAdapter(
                         .load(R.drawable.check)
                         .apply(overrideOf(266.px, 252.px))
                         .apply(bitmapTransform(MultiTransformation<Bitmap>(CenterCrop(),
-                                BorderMask(R.drawable.mask_starfish, 2, Color.BLUE, 10, Color.TRANSPARENT))))
+                                BorderMask(R.drawable.mask_starfish, border1Width, border1Color, border2Width, border2Color))))
                         .into(holder.image)
             }
             NinePatchMask -> {
@@ -111,7 +130,7 @@ class MainAdapter(
 
             Type.BorderCircleCrop -> Glide.with(context)
                     .load(R.drawable.demo)
-                    .apply(bitmapTransform(BorderCircleCrop(10, Color.RED, 10, Color.BLUE)))
+                    .apply(bitmapTransform(BorderCircleCrop(border1Width, border1Color, border2Width, border2Color)))
                     .into(holder.image)
 
             ColorFilter -> Glide.with(context)
@@ -124,10 +143,79 @@ class MainAdapter(
                     .apply(bitmapTransform(GrayscaleTransformation()))
                     .into(holder.image)
 
-            RoundedCorners -> Glide.with(context)
+            RoundedAll -> Glide.with(context)
                     .load(R.drawable.demo)
-                    .apply(bitmapTransform(RoundedCornersTransformation(45, 0,
-                            RoundedCornersTransformation.CornerType.BOTTOM)))
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.ALL, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedTopLeft -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.TOP_LEFT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedTopRight -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.TOP_RIGHT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedBottomLeft -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.BOTTOM_LEFT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedBottomRight -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.BOTTOM_RIGHT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedTop -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.TOP, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedBottom -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.BOTTOM, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedLeft -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.LEFT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedRight -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.RIGHT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedOtherTopLeft -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.OTHER_TOP_LEFT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedOtherTopRight -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.OTHER_TOP_RIGHT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedOtherBottomLeft -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.OTHER_BOTTOM_LEFT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedOtherBottomRight -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.OTHER_BOTTOM_RIGHT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedDiagonalFromTopLeft -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.DIAGONAL_FROM_TOP_LEFT, border1Width, border1Color, border2Width, border2Color)))
+                    .into(holder.image)
+
+            RoundedDiagonalFromTopRight -> Glide.with(context)
+                    .load(R.drawable.demo)
+                    .apply(bitmapTransform(BorderRoundedCorners(45, BorderRoundedCorners.CornerType.DIAGONAL_FROM_TOP_RIGHT, border1Width, border1Color, border2Width, border2Color)))
                     .into(holder.image)
 
             Blur -> Glide.with(context)

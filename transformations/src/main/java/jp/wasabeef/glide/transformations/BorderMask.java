@@ -178,12 +178,14 @@ public class BorderMask extends BaseBorderTransformation {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof BorderMask &&
-                ((BorderMask) o).maskId == maskId &&
-                ((BorderMask) o).mBorder1Breadth == mBorder1Breadth &&
-                ((BorderMask) o).mBorder1Color == mBorder1Color &&
-                ((BorderMask) o).mBorder2Breadth == mBorder2Breadth &&
-                ((BorderMask) o).mBorder2Color == mBorder2Color;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BorderMask that = (BorderMask) o;
+        return maskId == that.maskId &&
+                mBorder1Breadth == that.mBorder1Breadth &&
+                mBorder1Color == that.mBorder1Color &&
+                mBorder2Breadth == that.mBorder2Breadth &&
+                mBorder2Color == that.mBorder2Color;
     }
 
 }

@@ -118,14 +118,14 @@ public class BorderCircleCrop extends BaseBorderTransformation {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof BorderCircleCrop) {
-            BorderCircleCrop other = (BorderCircleCrop) o;
-            return mBorder1Color == other.mBorder1Color &&
-                    mBorder1Breadth == other.mBorder1Breadth &&
-                    mBorder2Color == other.mBorder2Color &&
-                    mBorder2Breadth == other.mBorder2Breadth;
-        }
-        return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BorderCircleCrop that = (BorderCircleCrop) o;
+        return mBorder1Breadth == that.mBorder1Breadth &&
+                mBorder1Color == that.mBorder1Color &&
+                mBorder2Breadth == that.mBorder2Breadth &&
+                mBorder2Color == that.mBorder2Color;
     }
+
 
 }
