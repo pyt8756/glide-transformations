@@ -4,11 +4,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RSRuntimeException;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
+
+import androidx.renderscript.Allocation;
+import androidx.renderscript.Element;
+import androidx.renderscript.RSRuntimeException;
+import androidx.renderscript.RenderScript;
+import androidx.renderscript.ScriptIntrinsicBlur;
 
 /**
  * Copyright (C) 2018 Wasabeef
@@ -26,7 +27,7 @@ import android.renderscript.ScriptIntrinsicBlur;
  * limitations under the License.
  */
 
-public class RSBlur {
+public class SupportRSBlur {
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
   public static Bitmap blur(Context context, Bitmap bitmap, int radius) throws RSRuntimeException {

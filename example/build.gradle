@@ -1,14 +1,18 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion COMPILE_SDK_VERSION as int
-  buildToolsVersion BUILD_TOOLS_VERSION
 
   defaultConfig {
     minSdkVersion MIN_SDK_VERSION as int
     targetSdkVersion TARGET_SDK_VERSION as int
     versionCode "git rev-list origin/master --count".execute().text.toInteger()
     versionName VERSION_NAME
+
+    renderscriptTargetApi TARGET_SDK_VERSION as int
+    renderscriptSupportModeEnabled true
   }
 
   signingConfigs {
@@ -28,6 +32,9 @@ android {
     release {
       debuggable false
       zipAlignEnabled true
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      shrinkResources true
       signingConfig signingConfigs.release
     }
   }
@@ -50,9 +57,12 @@ def getKeyAliasPasswordProperty() {
 }
 
 dependencies {
-  compile project(':transformations')
-  compile "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
-  compile "jp.co.cyberagent.android.gpuimage:gpuimage-library:${GPUIMAGE_VERSION}"
-  compile "com.android.support:appcompat-v7:${SUPPORT_PACKAGE_VERSION}"
-  compile "com.android.support:recyclerview-v7:${SUPPORT_PACKAGE_VERSION}"
+  implementation project(':transformations')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  implementation "com.github.bumptech.glide:glide:$glide_version"
+  kapt "com.github.bumptech.glide:compiler:$glide_version"
+  implementation "jp.co.cyberagent.android:gpuimage:$gpuimage_version"
+  implementation "androidx.appcompat:appcompat:1.0.2"
+  implementation "androidx.recyclerview:recyclerview:1.0.0"
+  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

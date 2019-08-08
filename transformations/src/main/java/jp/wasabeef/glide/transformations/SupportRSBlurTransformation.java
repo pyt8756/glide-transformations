@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 
@@ -27,12 +28,14 @@ import java.security.MessageDigest;
 
 import androidx.annotation.NonNull;
 import jp.wasabeef.glide.transformations.internal.FastBlur;
+import jp.wasabeef.glide.transformations.internal.RSBlur;
+import jp.wasabeef.glide.transformations.internal.SupportRSBlur;
 
-public class BlurTransformation extends BitmapTransformation {
+public class SupportRSBlurTransformation extends BitmapTransformation {
 
   private static final int VERSION = 1;
   private static final String ID =
-      "jp.wasabeef.glide.transformations.BlurTransformation." + VERSION;
+      "jp.wasabeef.glide.transformations.SupportRSBlurTransformation." + VERSION;
 
   private static int MAX_RADIUS = 25;
   private static int DEFAULT_DOWN_SAMPLING = 1;
@@ -40,15 +43,15 @@ public class BlurTransformation extends BitmapTransformation {
   private int radius;
   private int sampling;
 
-  public BlurTransformation() {
+  public SupportRSBlurTransformation() {
     this(MAX_RADIUS, DEFAULT_DOWN_SAMPLING);
   }
 
-  public BlurTransformation(int radius) {
+  public SupportRSBlurTransformation(int radius) {
     this(radius, DEFAULT_DOWN_SAMPLING);
   }
 
-  public BlurTransformation(int radius, int sampling) {
+  public SupportRSBlurTransformation(int radius, int sampling) {
     this.radius = radius;
     this.sampling = sampling;
   }
@@ -70,21 +73,31 @@ public class BlurTransformation extends BitmapTransformation {
     paint.setFlags(Paint.FILTER_BITMAP_FLAG);
     canvas.drawBitmap(toTransform, 0, 0, paint);
 
-    bitmap = FastBlur.blur(bitmap, radius, true);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+      try {
+        bitmap = SupportRSBlur.blur(context, bitmap, radius);
+      } catch (NoClassDefFoundError e) {
+        bitmap = RSBlur.blur(context, bitmap, radius);
+      } catch (RuntimeException e) {
+        bitmap = FastBlur.blur(bitmap, radius, true);
+      }
+    } else {
+      bitmap = FastBlur.blur(bitmap, radius, true);
+    }
 
     return bitmap;
   }
 
   @Override
   public String toString() {
-    return "BlurTransformation(radius=" + radius + ", sampling=" + sampling + ")";
+    return "SupportRSBlurTransformation(radius=" + radius + ", sampling=" + sampling + ")";
   }
 
   @Override
   public boolean equals(Object o) {
-    return o instanceof BlurTransformation &&
-        ((BlurTransformation) o).radius == radius &&
-        ((BlurTransformation) o).sampling == sampling;
+    return o instanceof SupportRSBlurTransformation &&
+        ((SupportRSBlurTransformation) o).radius == radius &&
+        ((SupportRSBlurTransformation) o).sampling == sampling;
   }
 
   @Override

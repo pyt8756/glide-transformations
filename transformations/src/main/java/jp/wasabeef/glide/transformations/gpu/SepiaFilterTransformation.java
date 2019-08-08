@@ -1,7 +1,7 @@
 package jp.wasabeef.glide.transformations.gpu;
 
 /**
- * Copyright (C) 2015 Wasabeef
+ * Copyright (C) 2018 Wasabeef
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,10 @@ package jp.wasabeef.glide.transformations.gpu;
  * limitations under the License.
  */
 
-import android.content.Context;
+import java.security.MessageDigest;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-
-import jp.co.cyberagent.android.gpuimage.GPUImageSepiaFilter;
-
+import androidx.annotation.NonNull;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageSepiaToneFilter;
 
 /**
  * Applies a simple sepia effect.
@@ -31,29 +28,40 @@ import jp.co.cyberagent.android.gpuimage.GPUImageSepiaFilter;
  */
 public class SepiaFilterTransformation extends GPUFilterTransformation {
 
-    private float mIntensity;
+  private static final int VERSION = 1;
+  private static final String ID =
+      "jp.wasabeef.glide.transformations.gpu.SepiaFilterTransformation." + VERSION;
 
-    public SepiaFilterTransformation(Context context) {
-        this(context, Glide.get(context).getBitmapPool());
-    }
+  private float intensity;
 
-    public SepiaFilterTransformation(Context context, BitmapPool pool) {
-        this(context, pool, 1.0f);
-    }
+  public SepiaFilterTransformation() {
+    this(1.0f);
+  }
 
-    public SepiaFilterTransformation(Context context, float intensity) {
-        this(context, Glide.get(context).getBitmapPool(), intensity);
-    }
+  public SepiaFilterTransformation(float intensity) {
+    super(new GPUImageSepiaToneFilter());
+    this.intensity = intensity;
+    GPUImageSepiaToneFilter filter = getFilter();
+    filter.setIntensity(this.intensity);
+  }
 
-    public SepiaFilterTransformation(Context context, BitmapPool pool, float intensity) {
-        super(context, pool, new GPUImageSepiaFilter());
-        mIntensity = intensity;
-        GPUImageSepiaFilter filter = getFilter();
-        filter.setIntensity(mIntensity);
-    }
+  @Override
+  public String toString() {
+    return "SepiaFilterTransformation(intensity=" + intensity + ")";
+  }
 
-    @Override
-    public String getId() {
-        return "SepiaFilterTransformation(intensity=" + mIntensity + ")";
-    }
+  @Override
+  public boolean equals(Object o) {
+    return o instanceof SepiaFilterTransformation;
+  }
+
+  @Override
+  public int hashCode() {
+    return ID.hashCode() + (int) (intensity * 10);
+  }
+
+  @Override
+  public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+    messageDigest.update((ID + intensity).getBytes(CHARSET));
+  }
 }

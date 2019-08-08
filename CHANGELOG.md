@@ -1,6 +1,94 @@
 Change Log
 ==========
 
+Version 4.0.1 *(2018-11-20)*
+----------------------------
+
+Add:
+- consumerProguardFiles setting
+
+Version 4.0.0 *(2018-11-16)*
+----------------------------
+
+Update:
+- Migrate to AndroidX
+- Remove novoda-bintray-plugin
+
+Version 3.3.0 *(2018-04-23)*
+----------------------------
+
+Update:  
+- Support Library 27.1.0 -> 27.1.1  
+- Glide 4.6.1 -> 4.7.1  
+
+Feature:  
+- SupportRSBlurTransformation [#125](https://github.com/wasabeef/glide-transformations/pull/125)   
+  it's using RenderScript support mode but can you choose to use or not.   
+  Thank you [@fougere-mike](https://github.com/fougere-mike)  
+
+Bug Fix: 
+- Set detail of Cache key [#119](https://github.com/wasabeef/glide-transformations/issues/119)     
+
+Version 3.2.0 *(2018-04-10)*
+----------------------------
+
+Update:  
+- Support Library 27.0.2 -> 27.1.0  
+
+Bug Fix:  
+- We quit use the RenderScript [#120](https://github.com/wasabeef/glide-transformations/issues/120)     
+
+Version 3.1.1 *(2018-02-13)*
+----------------------------
+
+Update:  
+- Glide 4.5.0 -> 4.6.1  
+
+Bug Fix:  
+- Fix settings fot proguard.
+
+Version 3.1.0 *(2018-01-26)*
+----------------------------
+
+Update:  
+- Compile & Target SDK Version 25 -> 27  
+- Build Tools 26.0.1 -> 27.0.3  
+- Support Library 25.3.1 -> 27.0.2  
+- Glide 4.0.0 -> 4.5.0  
+
+Bug Fix:  
+- [Implement equals() and hashCode() methods #105](https://github.com/wasabeef/glide-transformations/pull/105)  
+- Use RenderScript#releaseAllContexts  
+
+Version 3.0.1 *(2017-09-08)*
+----------------------------
+
+Bug Fix:
+- [Deleted a setting for DexGuard #86](https://github.com/wasabeef/glide-transformations/issues/86)
+
+Version 3.0.0 *(2017-09-06)*
+----------------------------
+
+Update:
+- Build Tools 25.0.2 -> 26.0.1
+- Min SDK Version 11 -> 14
+- Glide 3.7.0 -> 4.0.0
+
+Feature: 
+- Supported Glide 4.0.0
+
+Version 2.0.2 *(2017-03-17)*
+----------------------------
+
+Update:
+- Compile & Target SDK Version 23 -> 25
+- Build Tools 23.0.2 -> 25.0.2
+- Support Library 23.2.1 -> 25.3.0
+- GPUImage for Android 1.3.0 -> 1.4.1
+
+Bug Fix:
+- [Additional resource cleanup in RSBlur #45](https://github.com/wasabeef/glide-transformations/pull/45)
+ 
 Version 2.0.1 *(2016-04-21)*
 ----------------------------
 

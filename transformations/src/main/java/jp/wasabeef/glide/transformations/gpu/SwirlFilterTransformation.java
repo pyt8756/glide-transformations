@@ -1,14 +1,14 @@
 package jp.wasabeef.glide.transformations.gpu;
 
 /**
- * Copyright (C) 2015 Wasabeef
- * <p>
+ * Copyright (C) 2018 Wasabeef
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,56 +16,67 @@ package jp.wasabeef.glide.transformations.gpu;
  * limitations under the License.
  */
 
-import android.content.Context;
 import android.graphics.PointF;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import java.security.MessageDigest;
 
-import jp.co.cyberagent.android.gpuimage.GPUImageSwirlFilter;
-
+import androidx.annotation.NonNull;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageSwirlFilter;
 
 /**
  * Creates a swirl distortion on the image.
  */
 public class SwirlFilterTransformation extends GPUFilterTransformation {
 
-    private float mRadius;
-    private float mAngle;
-    private PointF mCenter;
+  private static final int VERSION = 1;
+  private static final String ID =
+      "jp.wasabeef.glide.transformations.gpu.SwirlFilterTransformation." + VERSION;
 
-    public SwirlFilterTransformation(Context context) {
-        this(context, Glide.get(context).getBitmapPool());
-    }
+  private float radius;
+  private float angle;
+  private PointF center;
 
-    public SwirlFilterTransformation(Context context, BitmapPool pool) {
-        this(context, pool, .5f, 1.0f, new PointF(0.5f, 0.5f));
-    }
+  public SwirlFilterTransformation() {
+    this(.5f, 1.0f, new PointF(0.5f, 0.5f));
+  }
 
-    public SwirlFilterTransformation(Context context, float radius, float angle, PointF center) {
-        this(context, Glide.get(context).getBitmapPool(), radius, angle, center);
-    }
+  /**
+   * @param radius from 0.0 to 1.0, default 0.5
+   * @param angle  minimum 0.0, default 1.0
+   * @param center default (0.5, 0.5)
+   */
+  public SwirlFilterTransformation(float radius, float angle, PointF center) {
+    super(new GPUImageSwirlFilter());
+    this.radius = radius;
+    this.angle = angle;
+    this.center = center;
+    GPUImageSwirlFilter filter = getFilter();
+    filter.setRadius(this.radius);
+    filter.setAngle(this.angle);
+    filter.setCenter(this.center);
+  }
 
-    /**
-     * @param radius from 0.0 to 1.0, default 0.5
-     * @param angle minimum 0.0, default 1.0
-     * @param center default (0.5, 0.5)
-     */
-    public SwirlFilterTransformation(Context context, BitmapPool pool, float radius, float angle,
-                                     PointF center) {
-        super(context, pool, new GPUImageSwirlFilter());
-        mRadius = radius;
-        mAngle = angle;
-        mCenter = center;
-        GPUImageSwirlFilter filter = getFilter();
-        filter.setRadius(mRadius);
-        filter.setAngle(mAngle);
-        filter.setCenter(mCenter);
-    }
+  @Override
+  public String toString() {
+    return "SwirlFilterTransformation(radius=" + radius + ",angle=" + angle + ",center="
+        + center.toString() + ")";
+  }
 
-    @Override
-    public String getId() {
-        return "SwirlFilterTransformation(radius=" + mRadius +
-                ",angle=" + mAngle + ",center=" + mCenter.toString() + ")";
-    }
+  @Override
+  public boolean equals(Object o) {
+    return o instanceof SwirlFilterTransformation &&
+        ((SwirlFilterTransformation) o).radius == radius &&
+        ((SwirlFilterTransformation) o).angle == radius &&
+        ((SwirlFilterTransformation) o).center.equals(center.x, center.y);
+  }
+
+  @Override
+  public int hashCode() {
+    return ID.hashCode() + (int) (radius * 1000) + (int) (angle * 10) + center.hashCode();
+  }
+
+  @Override
+  public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+    messageDigest.update((ID + radius + angle + center.hashCode()).getBytes(CHARSET));
+  }
 }

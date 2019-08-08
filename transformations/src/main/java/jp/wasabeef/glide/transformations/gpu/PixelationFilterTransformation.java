@@ -1,14 +1,14 @@
 package jp.wasabeef.glide.transformations.gpu;
 
 /**
- * Copyright (C) 2015 Wasabeef
- * <p>
+ * Copyright (C) 2018 Wasabeef
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,13 +16,10 @@ package jp.wasabeef.glide.transformations.gpu;
  * limitations under the License.
  */
 
-import android.content.Context;
+import java.security.MessageDigest;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-
-import jp.co.cyberagent.android.gpuimage.GPUImagePixelationFilter;
-
+import androidx.annotation.NonNull;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImagePixelationFilter;
 
 /**
  * Applies a Pixelation effect to the image.
@@ -31,29 +28,40 @@ import jp.co.cyberagent.android.gpuimage.GPUImagePixelationFilter;
  */
 public class PixelationFilterTransformation extends GPUFilterTransformation {
 
-    private float mPixel;
+  private static final int VERSION = 1;
+  private static final String ID =
+      "jp.wasabeef.glide.transformations.gpu.PixelationFilterTransformation." + VERSION;
 
-    public PixelationFilterTransformation(Context context) {
-        this(context, Glide.get(context).getBitmapPool());
-    }
+  private float pixel;
 
-    public PixelationFilterTransformation(Context context, BitmapPool pool) {
-        this(context, pool, 10f);
-    }
+  public PixelationFilterTransformation() {
+    this(10f);
+  }
 
-    public PixelationFilterTransformation(Context context, float pixel) {
-        this(context, Glide.get(context).getBitmapPool(), pixel);
-    }
+  public PixelationFilterTransformation(float pixel) {
+    super(new GPUImagePixelationFilter());
+    this.pixel = pixel;
+    GPUImagePixelationFilter filter = getFilter();
+    filter.setPixel(this.pixel);
+  }
 
-    public PixelationFilterTransformation(Context context, BitmapPool pool, float pixel) {
-        super(context, pool, new GPUImagePixelationFilter());
-        mPixel = pixel;
-        GPUImagePixelationFilter filter = getFilter();
-        filter.setPixel(mPixel);
-    }
+  @Override
+  public String toString() {
+    return "PixelationFilterTransformation(pixel=" + pixel + ")";
+  }
 
-    @Override
-    public String getId() {
-        return "PixelationFilterTransformation(pixel=" + mPixel + ")";
-    }
+  @Override
+  public boolean equals(Object o) {
+    return o instanceof PixelationFilterTransformation;
+  }
+
+  @Override
+  public int hashCode() {
+    return ID.hashCode() + (int) (pixel * 10);
+  }
+
+  @Override
+  public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+    messageDigest.update((ID + pixel).getBytes(CHARSET));
+  }
 }

@@ -1,14 +1,14 @@
 package jp.wasabeef.glide.transformations;
 
 /**
- * Copyright (C) 2015 Wasabeef
- * <p>
+ * Copyright (C) 2018 Wasabeef
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,67 +24,72 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Transformation;
-import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 
+import java.security.MessageDigest;
+
+import androidx.annotation.NonNull;
 import jp.wasabeef.glide.transformations.internal.Utils;
 
-/**
- * 图片
- */
-public class MaskTransformation implements Transformation<Bitmap> {
+public class MaskTransformation extends BitmapTransformation {
 
-    private Context mContext;
-    private BitmapPool mBitmapPool;
-    private int mMaskId;
+  private static final int VERSION = 1;
+  private static final String ID =
+      "jp.wasabeef.glide.transformations.MaskTransformation." + VERSION;
 
-    /**
-     * @param maskId If you change the mask file, please also rename the mask file, or Glide will get
-     *               the cache with the old mask. Because getId() return the same values if using the
-     *               same make file name. If you have a good idea please tell us, thanks.
-     */
-    public MaskTransformation(Context context, int maskId) {
-        this(context, Glide.get(context).getBitmapPool(), maskId);
-    }
+  private static Paint paint = new Paint();
+  private int maskId;
 
-    public MaskTransformation(Context context, BitmapPool pool, int maskId) {
-        mBitmapPool = pool;
-        mContext = context.getApplicationContext();
-        mMaskId = maskId;
-    }
+  static {
+    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+  }
 
-    @Override
-    public Resource<Bitmap> transform(Resource<Bitmap> resource, int outWidth, int outHeight) {
-        Bitmap source = resource.get();
+  /**
+   * @param maskId If you change the mask file, please also rename the mask file, or Glide will get
+   *               the cache with the old mask. Because key() return the same values if using the
+   *               same make file name. If you have a good idea please tell us, thanks.
+   */
+  public MaskTransformation(int maskId) {
+    this.maskId = maskId;
+  }
 
-        int width = source.getWidth();
-        int height = source.getHeight();
+  @Override
+  protected Bitmap transform(@NonNull Context context, @NonNull BitmapPool pool,
+                             @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+    int width = toTransform.getWidth();
+    int height = toTransform.getHeight();
 
-        Bitmap result = mBitmapPool.get(width, height, Bitmap.Config.ARGB_8888);
-        if (result == null) {
-            result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        }
+    Bitmap bitmap = pool.get(width, height, Bitmap.Config.ARGB_8888);
+    bitmap.setHasAlpha(true);
 
-        Paint sMaskingPaint = new Paint();
-        sMaskingPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        sMaskingPaint.setAntiAlias(true);
+    Drawable mask = Utils.getMaskDrawable(context.getApplicationContext(), maskId);
 
-        Drawable mask = Utils.getMaskDrawable(mContext, mMaskId);
+    Canvas canvas = new Canvas(bitmap);
+    mask.setBounds(0, 0, width, height);
+    mask.draw(canvas);
+    canvas.drawBitmap(toTransform, 0, 0, paint);
 
-        Canvas canvas = new Canvas(result);
-        mask.setBounds(0, 0, width, height);
-        mask.draw(canvas);
-        canvas.drawBitmap(source, 0, 0, sMaskingPaint);
+    return bitmap;
+  }
 
-        return BitmapResource.obtain(result, mBitmapPool);
-    }
+  @Override
+  public String toString() {
+    return "MaskTransformation(maskId=" + maskId + ")";
+  }
 
-    @Override
-    public String getId() {
-        return "MaskTransformation(maskId=" + mContext.getResources().getResourceEntryName(mMaskId)
-                + ")";
-    }
+  @Override
+  public boolean equals(Object o) {
+    return o instanceof MaskTransformation &&
+        ((MaskTransformation) o).maskId == maskId;
+  }
+
+  @Override
+  public int hashCode() {
+    return ID.hashCode() + maskId * 10;
+  }
+
+  @Override
+  public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+    messageDigest.update((ID + maskId).getBytes(CHARSET));
+  }
 }
