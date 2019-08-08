@@ -72,7 +72,7 @@ class MainAdapter(
                         .load(R.drawable.check)
                         .apply(overrideOf(266.px, 252.px))
                         .apply(bitmapTransform(MultiTransformation<Bitmap>(CenterCrop(),
-                                MaskTransformation(R.drawable.mask_starfish))))
+                                BorderMask(R.drawable.mask_starfish, 2, Color.BLUE, 10, Color.TRANSPARENT))))
                         .into(holder.image)
             }
             NinePatchMask -> {
@@ -111,7 +111,7 @@ class MainAdapter(
 
             Type.BorderCircleCrop -> Glide.with(context)
                     .load(R.drawable.demo)
-                    .apply(bitmapTransform(BorderCircleCrop(10, Color.RED)))
+                    .apply(bitmapTransform(BorderCircleCrop(10, Color.RED, 10, Color.BLUE)))
                     .into(holder.image)
 
             ColorFilter -> Glide.with(context)
